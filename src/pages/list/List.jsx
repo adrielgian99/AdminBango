@@ -1,18 +1,36 @@
 import "./list.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import Datatable from "../../components/datatable/Datatable";
+import UserDatatable from "../../components/datatable/UserDatatable";
+import ProductsDatatable from "../../components/datatable/ProductsDatatable";
 
 const List = () => {
-  return (
-    <div className="list">
-      <Sidebar />
-      <div className="listContainer">
-        <Navbar />
-        <Datatable />
-      </div>
-    </div>
-  );
+  switch (window.location.pathname) {
+    case "/users":
+      return (
+        <div className="list">
+          <Sidebar />
+          <div className="listContainer">
+            <Navbar />
+            <UserDatatable />
+          </div>
+        </div>
+      );
+
+    case "/products":
+      return (
+        <div className="list">
+          <Sidebar />
+          <div className="listContainer">
+            <Navbar />
+            <ProductsDatatable />
+          </div>
+        </div>
+      );
+
+    default:
+      break;
+  }
 };
 
 export default List;
