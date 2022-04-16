@@ -1,4 +1,7 @@
+import { useState, useEffect } from "react";
 import React from "react";
+import Axios from "axios";
+import { API_URL } from "../../constants/API";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -13,12 +16,23 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { productRows } from "../../datatablesource";
+// import { productRows } from "../../datatablesource";
 import "./productsDatatable.scss";
-import { DataGrid } from "@mui/x-data-grid";
-import { TablePagination } from "@mui/material";
 
 const ProductsDatatable = () => {
+  const [productRows, setProductRows] = useState([]);
+
+  const fetchProducts = async (offset, limit) => {
+    const products = await Axios.get(
+      `${API_URL}/product/get/${offset}/${limit}`
+    );
+    return setProductRows(products?.data);
+  };
+
+  useEffect(() => {
+    fetchProducts(0, 999);
+  }, []);
+
   function Row(props) {
     const { row } = props;
 
@@ -38,7 +52,7 @@ const ProductsDatatable = () => {
           </TableCell>
           <TableCell component="th" scope="row">
             <div className="cellWrapper">
-              <img src={row.img} className="image" alt="" />
+              <img src={row.img_path} className="image" alt="" />
               {row.name}
             </div>
           </TableCell>
@@ -60,7 +74,7 @@ const ProductsDatatable = () => {
                       <TableCell>Stock</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
+                  {/* <TableBody>
                     {row.warehouse.map((warehouseRow) => (
                       <TableRow key={warehouseRow.warehouseName}>
                         <TableCell component="th" scope="row">
@@ -69,7 +83,7 @@ const ProductsDatatable = () => {
                         <TableCell>{warehouseRow.stock}</TableCell>
                       </TableRow>
                     ))}
-                  </TableBody>
+                  </TableBody> */}
                 </Table>
               </Box>
             </Collapse>
@@ -103,7 +117,6 @@ const ProductsDatatable = () => {
               <Row key={row.name} row={row} />
             ))}
           </TableBody>
-          <TablePagination rowsPerPageOptions={[10, 50]} />
         </Table>
       </TableContainer>
     </div>

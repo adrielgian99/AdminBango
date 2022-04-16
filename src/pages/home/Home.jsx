@@ -1,4 +1,4 @@
-import Navbar from "../../components/navbar/Navbar";
+// import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Table from "../../components/table/Table";
 import Widget from "../../components/widget/Widget";
@@ -9,7 +9,7 @@ const Home = () => {
     <div className="home">
       <Sidebar />
       <div className="homeContainer">
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="widgets">
           <Widget type="user" />
           <Widget type="product" />
